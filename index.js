@@ -8,4 +8,6 @@ client.once("ready", () => {
   console.log(`Logado como ${client.user.tag}`);
 });
 
+require("./mod")(client);
+
 client.login(process.env.TOKEN);
