@@ -5,22 +5,33 @@ module.exports = (client) => {
   const confirmacoes = new Map();
 
   client.on("messageCreate", async (message) => {
+
+    if (!message.guild) return;
     if (message.author.bot) return;
 
     const args = message.content.trim().split(/\s+/);
     const comando = args[0]?.toLowerCase();
 
     // ================= BLOQUEAR LINKS =================
-    const linkRegex = /\b(https?:\/\/|discord\.gg\/)\S+/i;
+    const linkRegex = /(discord\.gg\/|discord\.com\/invite\/)\S+/i;
 
-    if (linkRegex.test(message.content)) {
-      if (!message.member.permissions.has(PermissionsBitField.Flags.ManageMessages)) {
-        try {
-          await message.delete();
-          return message.channel.send(`envia esse convite no meio do teu cu !! Ass:Eris`);
-        } catch (err) {
-          console.log("Erro ao deletar:", err);
-        }
+if (linkRegex.test(message.content)) {
+
+  // ignora moderador
+  if (message.member.permissions.has(PermissionsBitField.Flags.ManageMessages)) return;
+
+  try {
+    await message.delete().catch(() => {});
+
+    return message.reply({
+      content: "❌ Não envie links de convite aqui.",
+      allowedMentions: { repliedUser: true }
+    });
+
+  } catch (err) {
+    console.log("Erro ao deletar:", err);
+  }
+}
       }
     }
 
