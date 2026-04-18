@@ -1,58 +1,157 @@
+const { PermissionsBitField } = require('discord.js');
+
 module.exports = (client) => {
+
+  const confirmacoes = new Map();
 
   client.on("messageCreate", async (message) => {
     if (message.author.bot) return;
 
-    const args = message.content.split(" ");
-    const cmd = args[0];
+    const args = message.content.trim().split(/\s+/);
+    const comando = args[0]?.toLowerCase();
 
-    // ===== BAN =====
-    if (cmd === "!ban") {
-      if (!message.member.permissions.has("BanMembers"))
-        return message.reply("❌ Você não tem permissão.");
-
-      const user = message.mentions.members.first();
-      if (!user) return message.reply("Marca alguém.");
-
-      await user.ban();
-      message.reply(`🔨 ${user.user.tag} foi banido.`);
-    }
-
-    // ===== KICK =====
-    if (cmd === "!kick") {
-      if (!message.member.permissions.has("KickMembers"))
-        return message.reply("❌ Você não tem permissão.");
-
-      const user = message.mentions.members.first();
-      if (!user) return message.reply("Marca alguém.");
-
-      await user.kick();
-      message.reply(`👢 ${user.user.tag} foi expulso.`);
-    }
-
-    // ===== CASTIGO (timeout) =====
-    if (cmd === "!castigar") {
-      if (!message.member.permissions.has("ModerateMembers"))
-        return message.reply("❌ Você não tem permissão.");
-
-      const user = message.mentions.members.first();
-      if (!user) return message.reply("Marca alguém.");
-
-      await user.timeout(10 * 60 * 1000); // 10 minutos
-      message.reply(`⏳ ${user.user.tag} ficou de castigo por 10 minutos.`);
-    }
-
-    // ===== BLOQUEAR LINKS =====
-    const linkRegex = /(https?:\/\/|discord\.gg\/)/i;
+    // ================= BLOQUEAR LINKS =================
+    const linkRegex = /\b(https?:\/\/|discord\.gg\/)\S+/i;
 
     if (linkRegex.test(message.content)) {
-      if (!message.member.permissions.has("ManageMessages")) {
-        await message.delete();
-
-        message.channel.send(
-          `🚫 ${message.author}, não envie links aqui.\nAss: Eris`
-        );
+      if (!message.member.permissions.has(PermissionsBitField.Flags.ManageMessages)) {
+        try {
+          await message.delete();
+          return message.channel.send(`envia esse convite no meio do teu cu !! Ass:Eris`);
+        } catch (err) {
+          console.log("Erro ao deletar:", err);
+        }
       }
+    }
+
+    // ================= CONFIRMAÇÃO =================
+    if (confirmacoes.has(message.author.id)) {
+      const data = confirmacoes.get(message.author.id);
+
+      if (message.channel.id !== data.channelId) return;
+
+      if (comando.startsWith("!")) {
+        return message.reply("⚠️ Responda 'sim' ou 'não' antes de usar outro comando.");
+      }
+
+      const resposta = message.content.toLowerCase();
+
+      if (resposta === "sim") {
+        confirmacoes.delete(message.author.id);
+
+        try {
+          if (data.tipo === "ban") {
+            if (!data.user.bannable) throw new Error();
+            await data.user.ban();
+            return message.reply(`✅ ${data.user.user.tag} foi banido.`);
+          }
+
+          if (data.tipo === "kick") {
+            if (!data.user.kickable) throw new Error();
+            await data.user.kick();
+            return message.reply(`✅ ${data.user.user.tag} foi expulso.`);
+          }
+
+          if (data.tipo === "castigar") {
+            if (!data.user.moderatable) throw new Error();
+            await data.user.timeout(10 * 60 * 1000);
+            return message.reply(`✅ ${data.user.user.tag} ficou de castigo.`);
+          }
+        } catch {
+          return message.reply("❌ Não consegui executar essa ação.");
+        }
+      }
+
+      if (["não", "nao"].includes(resposta)) {
+        confirmacoes.delete(message.author.id);
+        return message.reply("❌ Ação cancelada.");
+      }
+
+      return;
+    }
+
+    function validarAlvo(user) {
+      if (!user) return "Marque alguém.";
+
+      if (user.id === message.author.id) return "❌ Você não pode se punir.";
+
+      if (user.id === message.guild.ownerId) return "❌ Não pode punir o dono.";
+
+      if (user.permissions.has(PermissionsBitField.Flags.Administrator)) {
+        return "❌ Não pode punir administrador.";
+      }
+
+      if (message.member.roles.highest.position <= user.roles.highest.position) {
+        return "❌ Cargo igual ou maior que o seu.";
+      }
+
+      return null;
+    }
+
+    // ================= BAN =================
+    if (comando === "!ban") {
+      if (!message.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
+        return message.reply("❌ Sem permissão.");
+      }
+
+      const user = message.mentions.members.first();
+      const erro = validarAlvo(user);
+      if (erro) return message.reply(erro);
+
+      confirmacoes.delete(message.author.id);
+      confirmacoes.set(message.author.id, {
+        tipo: "ban",
+        user,
+        channelId: message.channel.id
+      });
+
+      setTimeout(() => confirmacoes.delete(message.author.id), 30000);
+
+      return message.reply(`⚠️ Confirmar BAN em ${user.user.tag}? (sim/não - 30s)`);
+    }
+
+    // ================= KICK =================
+    if (comando === "!kick") {
+      if (!message.member.permissions.has(PermissionsBitField.Flags.KickMembers)) {
+        return message.reply("❌ Sem permissão.");
+      }
+
+      const user = message.mentions.members.first();
+      const erro = validarAlvo(user);
+      if (erro) return message.reply(erro);
+
+      confirmacoes.delete(message.author.id);
+      confirmacoes.set(message.author.id, {
+        tipo: "kick",
+        user,
+        channelId: message.channel.id
+      });
+
+      setTimeout(() => confirmacoes.delete(message.author.id), 30000);
+
+      return message.reply(`⚠️ Confirmar KICK em ${user.user.tag}? (sim/não - 30s)`);
+    }
+
+    // ================= CASTIGAR =================
+    if (comando === "!castigar") {
+      if (!message.member.permissions.has(PermissionsBitField.Flags.ModerateMembers)) {
+        return message.reply("❌ Sem permissão.");
+      }
+
+      const user = message.mentions.members.first();
+      const erro = validarAlvo(user);
+      if (erro) return message.reply(erro);
+
+      confirmacoes.delete(message.author.id);
+      confirmacoes.set(message.author.id, {
+        tipo: "castigar",
+        user,
+        channelId: message.channel.id
+      });
+
+      setTimeout(() => confirmacoes.delete(message.author.id), 30000);
+
+      return message.reply(`⚠️ Confirmar CASTIGO em ${user.user.tag}? (sim/não - 30s)`);
     }
 
   });
