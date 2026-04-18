@@ -6,6 +6,7 @@ const client = new Client({
   GatewayIntentBits.GuildMessages,
   GatewayIntentBits.MessageContent
 ]
+});
 
 client.once("ready", () => {
   console.log(`Logado como ${client.user.tag}`);
