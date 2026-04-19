@@ -67,8 +67,9 @@ module.exports = (client) => {
             await data.user.timeout(10 * 60 * 1000);
             return message.reply(`✅ ${data.user.user.tag} ficou de castigo.`);
           }
-        } catch {
-          return message.reply("❌ Não consegui executar essa ação.");
+        } catch (err) {
+  console.log(err);
+  return message.reply("❌ Não consegui executar essa ação.");
         }
       }
 
