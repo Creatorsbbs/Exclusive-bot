@@ -21,15 +21,15 @@ if (linkRegex.test(message.content)) {
   if (message.member.permissions.has(PermissionsBitField.Flags.ManageMessages)) return;
 
   try {
-  await message.delete().catch(() => {});
+    await message.delete();
 
-  return message.reply({
-    content: "❌ Não envie links de convite aqui.",
-    allowedMentions: { repliedUser: true }
-  });
+    return message.reply({
+        content: "❌ Não envie links de convite aqui.",
+        allowedMentions: { repliedUser: true }
+    });
 
 } catch (err) {
-  console.log("Erro ao deletar:", err);
+    console.log("Erro ao deletar:", err);
   }
 }
       }
