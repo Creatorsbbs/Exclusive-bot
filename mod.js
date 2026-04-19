@@ -38,7 +38,7 @@ module.exports = (client) => {
     if (confirmacoes.has(message.author.id)) {
       const data = confirmacoes.get(message.author.id);
 
-      if (message.channel.id !== data.channelId) return;
+      if (!data || message.channel.id !== data.channelId) return;
 
       if (comando.startsWith("!")) {
         return message.reply("⚠️ Responda 'sim' ou 'não' antes de usar outro comando.");
