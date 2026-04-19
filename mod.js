@@ -24,9 +24,9 @@ module.exports = (client) => {
     await message.delete();
 
     return message.reply({
-        content: "❌ Não envie links de convite aqui.",
-        allowedMentions: { repliedUser: true }
-    });
+  content: "❌ Não envie links de convite aqui.",
+  allowedMentions: { repliedUser: true }
+});
 
 } catch (err) {
     console.log("Erro ao deletar:", err);
