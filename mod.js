@@ -18,7 +18,7 @@ module.exports = (client) => {
     if (linkRegex.test(message.content)) {
 
   // ignora moderador
-  if (message.member.permissions.has(PermissionsBitField.Flags.ManageMessages)) return;
+  if (message.member && message.member.permissions.has(PermissionsBitField.Flags.ManageMessages)) return;
 
   try {
     await message.delete();
