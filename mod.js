@@ -15,7 +15,7 @@ module.exports = (client) => {
     // ================= BLOQUEAR LINKS =================
     const linkRegex = /(discord\.gg\/|discord\.com\/invite\/)\S+/i;
 
-if (linkRegex.test(message.content)) {
+    if (linkRegex.test(message.content)) {
 
   // ignora moderador
   if (message.member.permissions.has(PermissionsBitField.Flags.ManageMessages)) return;
@@ -31,7 +31,6 @@ if (linkRegex.test(message.content)) {
 } catch (err) {
     console.log("Erro ao deletar:", err);
   }
-}
       }
     }
 
