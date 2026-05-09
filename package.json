@@ -1,20 +1,12 @@
 {
-  "name": "music-bot",
+  "name": "ticket-bot",
   "version": "1.0.0",
-  "description": "Bot de música Discord com DisTube",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
     "discord.js": "^14.14.1",
-    "distube": "^4.2.2",
-    "@distube/youtube": "^1.0.2",
-    "@discordjs/voice": "^0.16.0",
-    "ffmpeg-static": "^5.2.0",
-    "libsodium-wrappers": "^0.7.11",
-    "opusscript": "^0.0.8",
-    "dotenv": "^16.4.5",
-    "ytdl-core": "^4.11.5"
+    "express": "^4.18.2"
   }
 }
