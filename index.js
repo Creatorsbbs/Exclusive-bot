@@ -103,6 +103,11 @@ client.on("interactionCreate", async (interaction) => {
           .setCustomId("ticket_denuncia")
           .setLabel("🚨 Denúncia")
           .setStyle(ButtonStyle.Danger)
+
+        new ButtonBuilder()
+          .setCustomId("ticket_denuncia")
+          .setLabel("🤝 Parceria")
+          .setStyle(ButtonStyle.Danger)
       );
 
       return interaction.editReply({
