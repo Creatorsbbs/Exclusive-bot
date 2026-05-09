@@ -87,6 +87,8 @@ client.on("interactionCreate", async (interaction) => {
         )
         .setColor("#2b2d31");
 
+      .setImage("https://imgur.com/gallery/comunnity-vp-NFiakG9#OQDDy4C")
+      
       const row = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
           .setCustomId("ticket_suporte")
