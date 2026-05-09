@@ -81,19 +81,25 @@ client.on("interactionCreate", async (interaction) => {
       const embed = new EmbedBuilder()
         .setTitle("🎫 CENTRAL DE ATENDIMENTO")
         .setDescription(`
-          Aqui você pode abrir um atendimento de forma rápida e organizada. Escolha a opção que melhor se encaixa na sua necessidade e nossa equipe irá te atender o mais rápido possível.
-💬 Suporte
+Aqui você pode abrir um atendimento de forma rápida e organizada. Escolha a opção que melhor se encaixa na sua necessidade e nossa equipe irá te atender o mais rápido possível.
+
+💬 Suporte  
 Dúvidas, problemas ou ajuda geral com o servidor.
-💰 Vendas
+
+💰 Vendas  
 Informações sobre compras, serviços e negociações.
-🚨 Denúncia
+
+🚨 Denúncia  
 Reporte comportamentos inadequados ou situações irregulares.
-🤝 Parceria
+
+🤝 Parceria  
 Propostas de parceria, divulgação ou colaboração entre servidores.
+
 ⚡ Nosso sistema é automático, então seu ticket será criado instantaneamente e encaminhado para a equipe responsável.
-📌 Importante:
+
+📌 Importante:  
 Explique sua situação com o máximo de detalhes possível para agilizar o atendimento.
-        `)
+`)
         .setColor("#2b2d31")
         .setImage("https://cdn.discordapp.com/attachments/1466817788789395476/1502775980689719498/file_00000000e90071f58c96a816a57432b5.png?ex=6a00f0b2&is=69ff9f32&hm=34431c5ca70f05fcc1e1abe6e60d3a2ee4cbabc77a65b30811e5d94fc68b4831&")
       
