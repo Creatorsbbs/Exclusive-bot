@@ -105,7 +105,7 @@ client.on("interactionCreate", async (interaction) => {
           .setStyle(ButtonStyle.Danger),
 
         new ButtonBuilder()
-          .setCustomId("ticket_parcerias")
+          .setCustomId("ticket_parceria")
           .setLabel("🤝 Parceria")
           .setStyle(ButtonStyle.Secondary)
       );
@@ -193,6 +193,7 @@ client.on("interactionCreate", async (interaction) => {
   if (interaction.customId === "ticket_suporte") return createTicket("suporte");
   if (interaction.customId === "ticket_vendas") return createTicket("vendas");
   if (interaction.customId === "ticket_denuncia") return createTicket("denuncia");
+  if (interaction.customId === "ticket_parceria") return createTicket("parceria")
 
   if (interaction.customId === "call_staff") {
     interaction.channel.send(`🔔 ${user} chamou a staff!`);
