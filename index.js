@@ -105,7 +105,7 @@ client.on("interactionCreate", async (interaction) => {
           .setStyle(ButtonStyle.Danger),
 
         new ButtonBuilder()
-          .setCustomId("ticket_denuncia")
+          .setCustomId("ticket_parcerias")
           .setLabel("🤝 Parceria")
           .setStyle(ButtonStyle.Secondary)
       );
