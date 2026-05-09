@@ -86,8 +86,7 @@ client.on("interactionCreate", async (interaction) => {
           "⚡ Sistema automático de tickets"
         )
         .setColor("#2b2d31");
-
-      .setImage("https://imgur.com/gallery/comunnity-vp-NFiakG9#OQDDy4C")
+        .setImage("https://cdn.discordapp.com/attachments/1466817788789395476/1502775980689719498/file_00000000e90071f58c96a816a57432b5.png?ex=6a00f0b2&is=69ff9f32&hm=34431c5ca70f05fcc1e1abe6e60d3a2ee4cbabc77a65b30811e5d94fc68b4831&")
       
       const row = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
