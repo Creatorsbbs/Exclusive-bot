@@ -102,7 +102,7 @@ client.on("interactionCreate", async (interaction) => {
         new ButtonBuilder()
           .setCustomId("ticket_denuncia")
           .setLabel("🚨 Denúncia")
-          .setStyle(ButtonStyle.Danger)
+          .setStyle(ButtonStyle.Danger),
 
         new ButtonBuilder()
           .setCustomId("ticket_denuncia")
