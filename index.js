@@ -101,7 +101,7 @@ Propostas de parceria, divulgação ou colaboração entre servidores.
 Explique sua situação com o máximo de detalhes possível para agilizar o atendimento.
 `)
         .setColor("#2b2d31")
-        .setImage("https://cdn.discordapp.com/attachments/1466817788789395476/1502775980689719498/file_00000000e90071f58c96a816a57432b5.png?ex=6a00f0b2&is=69ff9f32&hm=34431c5ca70f05fcc1e1abe6e60d3a2ee4cbabc77a65b30811e5d94fc68b4831&")
+        .setImage("https://cdn.discordapp.com/attachments/1264564541979627604/1502803579617022033/file_00000000e3b471f5ab60e7c25276f1ae.png?ex=6a010a66&is=69ffb8e6&hm=abdba49be0b8e2e9a01ed53a7006e5df1557b6b6d0231a9374a795983a70230d&")
       
       const row = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
