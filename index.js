@@ -262,6 +262,8 @@ Equipe de Suporte`)
     owner.send({ embeds: [embed] }).catch(() => {});
   }
 
+  await interaction.deferUpdate();
+    
   await interaction.channel.send("🔒 Fechando ticket...");
 
   setTimeout(() => {
