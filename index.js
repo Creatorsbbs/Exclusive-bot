@@ -23,7 +23,7 @@ const client = new Client({
   ]
 });
 
-const forca = require("./comandos/forca");
+const forca = require("./forca");
 
 forca(client);
 
