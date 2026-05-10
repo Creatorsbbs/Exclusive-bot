@@ -17,6 +17,9 @@ const client = new Client({
   ]
 });
 
+const ticketOwners = new Map();
+let ticketCounter = 0;
+
 // ================= START =================
 client.once("ready", async () => {
   console.log(`🤖 Online como ${client.user.tag}`);
@@ -154,7 +157,6 @@ client.on("interactionCreate", async (interaction) => {
   async function createTicket(type) {
 
     const channel = await guild.channels.create({
-      ticketOwners.set(channel.id, user.id);
       name: `🎫-${type}-${user.username.toLowerCase().replace(/[^a-z0-9]/g, "")}`,
       type: ChannelType.GuildText,
       permissionOverwrites: [
