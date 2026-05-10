@@ -144,6 +144,8 @@ Explique sua situação com o máximo de detalhes possível para agilizar o aten
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isButton()) return;
 
+  const ticketOwners = new Map();
+
   const guild = interaction.guild;
   const user = interaction.user;
 
@@ -152,6 +154,7 @@ client.on("interactionCreate", async (interaction) => {
   async function createTicket(type) {
 
     const channel = await guild.channels.create({
+      ticketOwners.set(channel.id, user.id);
       name: `🎫-${type}-${user.username.toLowerCase().replace(/[^a-z0-9]/g, "")}`,
       type: ChannelType.GuildText,
       permissionOverwrites: [
@@ -237,8 +240,34 @@ Equipe de Suporte`)
   }
 
   if (interaction.customId === "close_ticket") {
-    await interaction.channel.send("🔒 Fechando ticket...");
-    setTimeout(() => interaction.channel.delete().catch(() => {}), 4000);
+
+  const guild = interaction.guild;
+  const channel = interaction.channel;
+  const closer = interaction.user;
+
+  const ownerId = ticketOwners.get(channel.id);
+  const owner = await guild.members.fetch(ownerId).catch(() => null);
+
+  const embed = new EmbedBuilder()
+    .setTitle("🔒 Ticket Fechado")
+    .setColor("Red")
+    .addFields(
+      { name: "🏠 Servidor", value: guild.name },
+      { name: "🎫 Ticket", value: channel.name },
+      { name: "👤 Fechado por", value: closer.tag },
+      { name: "👤 Aberto por", value: owner ? owner.user.tag : "Desconhecido" }
+    );
+
+  if (owner) {
+    owner.send({ embeds: [embed] }).catch(() => {});
+  }
+
+  await interaction.channel.send("🔒 Fechando ticket...");
+
+  setTimeout(() => {
+    channel.delete().catch(() => {});
+    ticketOwners.delete(channel.id);
+  }, 4000);
   }
 });
 
