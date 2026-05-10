@@ -179,7 +179,28 @@ client.on("interactionCreate", async (interaction) => {
 
     const embed = new EmbedBuilder()
       .setTitle(`🎫 Ticket ${type}`)
-      .setDescription(`👤 ${user}\nExplique seu problema abaixo.`)
+      .setDescription(`👤 ${user}\nOlá!
+Seu ticket foi criado com sucesso e nossa equipe já foi notificada.
+
+Seja bem-vindo(a) ao sistema de atendimento. Para que possamos oferecer o melhor suporte possível, pedimos que envie abaixo todas as informações relacionadas ao seu problema, dúvida ou solicitação.
+
+📌 Informações importantes
+
+> • Descreva seu problema de forma clara e detalhada.
+> • Caso necessário, envie prints, vídeos ou comprovantes.
+> • Evite mencionar membros da equipe sem necessidade.
+> • Mantenha o respeito durante todo o atendimento.»
+
+⏳ Tempo de resposta
+
+Nossa equipe responderá assim que possível. O tempo pode variar dependendo da quantidade de tickets abertos no momento.
+
+🔒 Privacidade
+
+Este canal é privado e visível apenas para você e a equipe responsável pelo suporte.
+
+Agradecemos pela paciência e preferência. ✨
+Equipe de Suporte`)
       .setColor("Green");
 
     const row = new ActionRowBuilder().addComponents(
