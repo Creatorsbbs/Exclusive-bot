@@ -23,6 +23,10 @@ const client = new Client({
   ]
 });
 
+const forca = require("./comandos/forca");
+
+forca(client);
+
 // ================= START =================
 client.once("ready", async () => {
   console.log(`🤖 Online como ${client.user.tag}`);
