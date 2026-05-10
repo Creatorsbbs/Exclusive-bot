@@ -149,8 +149,6 @@ Explique sua situação com o máximo de detalhes possível para agilizar o aten
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isButton()) return;
 
-  const ticketOwners = new Map();
-
   const guild = interaction.guild;
   const user = interaction.user;
 
