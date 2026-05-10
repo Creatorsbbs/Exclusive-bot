@@ -317,3 +317,12 @@ if (i.customId.startsWith("encerrar_")) {
     components: []
   });
 }
+
+    } // fecha interactionCreate
+
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+}; // 👈 FECHA O MODULE EXPORT
