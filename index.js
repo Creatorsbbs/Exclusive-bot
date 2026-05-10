@@ -157,11 +157,8 @@ client.on("interactionCreate", async (interaction) => {
     const channel = await guild.channels.create({
       name: `🎫-${type}-${user.username.toLowerCase().replace(/[^a-z0-9]/g, "")}`,
       type: ChannelType.GuildText,
-      permissionOverwrites: [
-        }
-        
-         ticketOwners.set(channel.id, user.id);
-      
+      permissionOverwrites:[
+        {
           id: guild.id,
           deny: [PermissionsBitField.Flags.ViewChannel]
         },
@@ -183,6 +180,8 @@ client.on("interactionCreate", async (interaction) => {
       ]
     });
 
+    ticketOwners.set(channel.id, user.id);
+    
     const embed = new EmbedBuilder()
       .setTitle(`🎫 Ticket ${type}`)
       .setDescription(`👤 ${user}\nOlá!
@@ -242,16 +241,15 @@ Equipe de Suporte`)
     return interaction.reply({ content: "Staff notificada!", ephemeral: true });
   }
 
-  if (interaction.customId === "close_ticket") {
-    }
-});
+   if (interaction.customId === "close_ticket") {
+  await interaction.deferUpdate();
 
   const guild = interaction.guild;
   const channel = interaction.channel;
   const closer = interaction.user;
 
   const ownerId = ticketOwners.get(channel.id);
-  const owner = await guild.members.fetch(ownerId).catch(() => null);
+  const owner = ownerId ? await guild.members.fetch(ownerId).catch(() => null) : null;
 
   const embed = new EmbedBuilder()
     .setTitle("🔒 Ticket Fechado")
@@ -267,16 +265,13 @@ Equipe de Suporte`)
     owner.send({ embeds: [embed] }).catch(() => {});
   }
 
-  await interaction.deferUpdate();
-    
-  await interaction.deferUpdate();
-await interaction.channel.send("🔒 Fechando ticket...");
+  await channel.send("🔒 Fechando ticket...");
 
   setTimeout(() => {
-    channel.delete().catch(() => {});
     ticketOwners.delete(channel.id);
+    channel.delete().catch(() => {});
   }, 4000);
-  }
+   }
 });
 
 client.login(process.env.TOKEN);
