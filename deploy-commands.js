@@ -4,6 +4,11 @@ const commands = [
   new SlashCommandBuilder()
     .setName("painel")
     .setDescription("Abre o painel de tickets")
+    .toJSON(),
+
+  new SlashCommandBuilder()
+    .setName("forca")
+    .setDescription("Inicia uma partida de forca multiplayer")
     .toJSON()
 ];
 
@@ -11,14 +16,14 @@ const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
 
 (async () => {
   try {
-    console.log("📦 Registrando comando /painel...");
+    console.log("📦 Registrando comandos...");
 
     await rest.put(
       Routes.applicationCommands(process.env.CLIENT_ID),
       { body: commands }
     );
 
-    console.log("✅ Comando /painel registrado com sucesso!");
+    console.log("✅ Comandos registrados com sucesso!");
   } catch (err) {
     console.log("❌ Erro ao registrar comando:", err);
   }
