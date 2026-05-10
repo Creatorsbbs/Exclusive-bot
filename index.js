@@ -20,8 +20,6 @@ const client = new Client({
   ]
 });
 
-let ticketCounter = 0;
-
 // ================= START =================
 client.once("ready", async () => {
   console.log(`🤖 Online como ${client.user.tag}`);
