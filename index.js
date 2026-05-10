@@ -9,6 +9,9 @@ const {
   PermissionsBitField
 } = require("discord.js");
 
+const ticketOwners = new Map();
+let ticketCounter = 0;
+
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -17,7 +20,6 @@ const client = new Client({
   ]
 });
 
-const ticketOwners = new Map();
 let ticketCounter = 0;
 
 // ================= START =================
