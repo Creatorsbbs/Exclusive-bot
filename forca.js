@@ -304,25 +304,19 @@ module.exports = (client) => {
 
     // ================= ENCERRAR =================
 
-if (i.customId.startsWith("encerrar_")) {
+    if (i.customId.startsWith("encerrar_")) {
 
-  const id = i.customId.replace("encerrar_", "");
-  const j = getSala(id, i.channel.id);
+      const id = i.customId.replace("encerrar_", "");
+      const j = getSala(id, i.channel.id);
 
-  if (j) salas.delete(j.id);
+      if (j) salas.delete(id);
 
-  return i.update({
-    content: "🛑 Partida encerrada com sucesso!",
-    embeds: [],
-    components: []
-  });
-}
+      return i.update({
+        content: "🛑 Partida encerrada",
+        embeds: [],
+        components: []
+      });
+    }
 
-    } // fecha interactionCreate
-
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-}; // 👈 FECHA O MODULE EXPORT
+  }); // fecha interactionCreate
+};
