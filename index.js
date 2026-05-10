@@ -243,6 +243,8 @@ Equipe de Suporte`)
   }
 
   if (interaction.customId === "close_ticket") {
+    }
+});
 
   const guild = interaction.guild;
   const channel = interaction.channel;
