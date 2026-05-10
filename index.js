@@ -267,7 +267,8 @@ Equipe de Suporte`)
 
   await interaction.deferUpdate();
     
-  await interaction.channel.send("🔒 Fechando ticket...");
+  await interaction.deferUpdate();
+await interaction.channel.send("🔒 Fechando ticket...");
 
   setTimeout(() => {
     channel.delete().catch(() => {});
