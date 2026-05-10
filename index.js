@@ -25,7 +25,7 @@ const client = new Client({
 
 const forca = require("./forca");
 
-forca(client);
+const { processarLetra, salas } = forca;
 
 // ================= START =================
 client.once("ready", async () => {
