@@ -84,14 +84,24 @@ client.on("interactionCreate", async (interaction) => {
       const embed = new EmbedBuilder()
         .setTitle("🎫 CENTRAL DE ATENDIMENTO")
         .setDescription(`
-Aqui você pode abrir um atendimento de forma rápida e organizada.
+Aqui você pode abrir um atendimento de forma rápida e organizada. Escolha a opção que melhor se encaixa na sua necessidade e nossa equipe irá te atender o mais rápido possível.
 
 💬 Suporte  
-💰 Vendas  
-🚨 Denúncia  
-🤝 Parceria  
+Dúvidas, problemas ou ajuda geral com o servidor.
 
-📌 Explique sua situação com detalhes.
+💰 Vendas  
+Informações sobre compras, serviços e negociações.
+
+🚨 Denúncia  
+Reporte comportamentos inadequados ou situações irregulares.
+
+🤝 Parceria  
+Propostas de parceria, divulgação ou colaboração entre servidores.
+
+⚡ Nosso sistema é automático, então seu ticket será criado instantaneamente e encaminhado para a equipe responsável.
+
+📌 Importante:  
+Explique sua situação com o máximo de detalhes possível para agilizar o atendimento.
 `)
         .setColor("#2b2d31");
 
