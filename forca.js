@@ -313,8 +313,7 @@ module.exports = (client) => {
 
       return i.update({
         content: `🛑 Partida encerrada`
-          components: []
-      });
-    }
-  });
-};
+        return interaction.update({
+  embeds: [embed],
+  components: []
+});
