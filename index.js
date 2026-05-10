@@ -158,7 +158,10 @@ client.on("interactionCreate", async (interaction) => {
       name: `🎫-${type}-${user.username.toLowerCase().replace(/[^a-z0-9]/g, "")}`,
       type: ChannelType.GuildText,
       permissionOverwrites: [
-        {
+        }
+        
+         ticketOwners.set(channel.id, user.id);
+      
           id: guild.id,
           deny: [PermissionsBitField.Flags.ViewChannel]
         },
