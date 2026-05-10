@@ -312,4 +312,9 @@ module.exports = (client) => {
       if (j) salas.delete(j.id);
 
       return i.update({
-        content: "🛑 Part
+        content: `🛑 Partida encerrada`
+          components: []
+      });
+    }
+  });
+};
