@@ -30,7 +30,7 @@ require("./forca")(client);
 
 // ================= START =================
 client.once("ready", async () => {
-console.log(🤖 Online como ${client.user.tag});
+console.log(`🤖 Online como ${client.user.tag}`);
 
 client.guilds.cache.forEach(guild => setupServer(guild));
 });
