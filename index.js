@@ -258,7 +258,11 @@ Equipe de Suporte`)
     .setStyle(ButtonStyle.Danger)
 );
 
-    await channel.send({ content: `${user}`, embeds: [embed], components: [row] });
+    await channel.send({
+  content: `🔔 <@&${staffRole.id}> <@${guild.ownerId}> ${user}`,
+  embeds: [embed],
+  components: [row]
+});
 
     const log = guild.channels.cache.find(c => c.name === "logs");
     if (log) log.send(`📌 Ticket aberto: ${type} | ${user.tag}`);
