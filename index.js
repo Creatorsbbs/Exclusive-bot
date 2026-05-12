@@ -275,7 +275,7 @@ Equipe de Suporte`)
   if (interaction.customId === "ticket_parceria") return createTicket("parceria");
 
   if (interaction.customId === "call_staff") {
-    interaction.channel.send(`🔔 ${user} chamou a staff!`);
+    interaction.channel.send(`🔔 <@&${staffRole.id}> ${user} chamou a staff!`);
     return interaction.reply({ content: "Staff notificada!", ephemeral: true });
   }
 
