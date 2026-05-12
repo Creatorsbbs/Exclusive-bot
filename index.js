@@ -176,7 +176,7 @@ async function createTicket(type) {
 
 const channel = await guild.channels.create({
 
-name: 🎫-${type}-${user.username.toLowerCase().replace(/[^a-z0-9]/g, "")},
+name: `🎫-${type}-${user.username.toLowerCase().replace(/[^a-z0-9]/g, "")}`,
 type: ChannelType.GuildText,
 
 parent: guild.channels.cache.find(
