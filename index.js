@@ -35,6 +35,8 @@ client.once("ready", async () => {
 // ================= AUTO SETUP =================
 async function setupServer(guild) {
   try {
+
+    // ================= CARGO STAFF =================
     let staffRole = guild.roles.cache.find(r => r.name === "STAFF");
 
     if (!staffRole) {
@@ -42,15 +44,19 @@ async function setupServer(guild) {
         name: "STAFF",
         color: "Red"
       });
+
       console.log("✔ Cargo STAFF criado");
     }
 
+    // ================= CANAL LOGS =================
     let logChannel = guild.channels.cache.find(c => c.name === "logs");
 
     if (!logChannel) {
+
       logChannel = await guild.channels.create({
         name: "logs",
         type: ChannelType.GuildText,
+
         permissionOverwrites: [
           {
             id: guild.id,
@@ -66,46 +72,23 @@ async function setupServer(guild) {
         ]
       });
 
-      let logChannel = guild.channels.cache.find(c => c.name === "logs");
-
-if (!logChannel) {
-  logChannel = await guild.channels.create({
-    name: "logs",
-    type: ChannelType.GuildText,
-    permissionOverwrites: [
-      {
-        id: guild.id,
-        deny: [PermissionsBitField.Flags.ViewChannel]
-      },
-      {
-        id: staffRole.id,
-        allow: [
-          PermissionsBitField.Flags.ViewChannel,
-          PermissionsBitField.Flags.SendMessages
-        ]
-      }
-    ]
-  });
-
-  console.log("✔ Canal logs criado");
-}
-
-// ================= CATEGORIA TICKETS =================
-let ticketCategory = guild.channels.cache.find(
-  c => c.name === "🎫 TICKETS" && c.type === ChannelType.GuildCategory
-);
-
-if (!ticketCategory) {
-
-  ticketCategory = await guild.channels.create({
-    name: "🎫 TICKETS",
-    type: ChannelType.GuildCategory
-  });
-
-  console.log("✔ Categoria de tickets criada");
-        }
-      
       console.log("✔ Canal logs criado");
+    }
+
+    // ================= CATEGORIA TICKETS =================
+    let ticketCategory = guild.channels.cache.find(
+      c => c.name === "🎫 TICKETS" &&
+      c.type === ChannelType.GuildCategory
+    );
+
+    if (!ticketCategory) {
+
+      ticketCategory = await guild.channels.create({
+        name: "🎫 TICKETS",
+        type: ChannelType.GuildCategory
+      });
+
+      console.log("✔ Categoria de tickets criada");
     }
 
   } catch (err) {
