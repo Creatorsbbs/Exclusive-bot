@@ -4,5 +4,7 @@
   "main": "index.js",
   "dependencies": {
     "discord.js": "^14.0.0"
+    "quick.db": "^9.0.0",
+    "better-sqlite3": "^9.0.0"
   }
 }
