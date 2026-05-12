@@ -40,23 +40,18 @@ async function setupServer(guild) {
   try {
 
     // ================= CARGO STAFF =================
-    const staffRoleId = await db.get(`staffRole_${guild.id}`);
-const staffRole = guild.roles.cache.get(staffRoleId);
+    let staffRoleId = await db.get(`staffRole_${guild.id}`);
+let staffRole = staffRoleId ? guild.roles.cache.get(staffRoleId) : null;
 
-    if (staffRole) {
+if (!staffRole) {
+  staffRole = await guild.roles.create({
+    name: "STAFF",
+    color: "Red"
+  });
+
   await db.set(`staffRole_${guild.id}`, staffRole.id);
-    }
-
-    if (!staffRole) {
-      staffRole = await guild.roles.create({
-  name: "STAFF",
-  color: "Red"
-});
-
-await db.set(`staffRole_${guild.id}`, staffRole.id);
-
-      console.log("✔ Cargo STAFF criado");
-    }
+  console.log("✔ Cargo STAFF criado");
+}
 
     // ================= CANAL LOGS =================
     let logChannel = guild.channels.cache.find(c => c.name === "logs");
