@@ -10,6 +10,16 @@ const commands = [
     .setName("forca")
     .setDescription("Inicia uma partida de forca multiplayer")
     .toJSON()
+
+  new SlashCommandBuilder()
+    .setName("setstaff")
+    .setDescription("Define o cargo de staff do servidor")
+    .addRoleOption(option =>
+      option
+        .setName("cargo")
+        .setDescription("Selecione o cargo de staff")
+        .setRequired(true)
+        .toJSON()
 ];
 
 const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
