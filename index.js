@@ -9,6 +9,9 @@ const {
   PermissionsBitField
 } = require("discord.js");
 
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
+
 // ================= DADOS =================
 const ticketOwners = new Map();
 const ticketData = new Map();
