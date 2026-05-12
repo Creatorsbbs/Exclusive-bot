@@ -177,7 +177,8 @@ client.on("interactionCreate", async (interaction) => {
   const guild = interaction.guild;
   const user = interaction.user;
 
-  const staffRole = guild.roles.cache.find(r => r.name === "STAFF");
+  const staffRoleId = await db.get(`staffRole_${guild.id}`);
+const staffRole = staffRoleId ? guild.roles.cache.get(staffRoleId) : null;
 
   async function createTicket(type) {
 
