@@ -271,7 +271,24 @@ Equipe de Suporte`)
 });
 
     const log = guild.channels.cache.find(c => c.name === "logs");
-    if (log) log.send(`📌 Ticket aberto: ${type} | ${user.tag}`);
+
+if (log) {
+  const embedLog = new EmbedBuilder()
+    .setTitle("🎫 Ticket Aberto")
+    .setColor("Green")
+    .addFields(
+      { name: "🏠 Servidor", value: guild.name },
+      { name: "🎫 Ticket", value: channel.name },
+      { name: "👤 Aberto por", value: user.tag },
+      { name: "📂 Tipo", value: type },
+      { name: "📅 Criado em", value: `<t:${Math.floor(Date.now() / 1000)}:F>` },
+      { name: "💬 Mensagens", value: "0" },
+      { name: "👥 Participantes", value: "1" }
+    )
+    .setTimestamp();
+
+  log.send({ embeds: [embedLog] });
+}
 
     return interaction.reply({
       content: `🎫 Ticket criado: ${channel}`,
