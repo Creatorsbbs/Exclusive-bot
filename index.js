@@ -66,6 +66,45 @@ async function setupServer(guild) {
         ]
       });
 
+      let logChannel = guild.channels.cache.find(c => c.name === "logs");
+
+if (!logChannel) {
+  logChannel = await guild.channels.create({
+    name: "logs",
+    type: ChannelType.GuildText,
+    permissionOverwrites: [
+      {
+        id: guild.id,
+        deny: [PermissionsBitField.Flags.ViewChannel]
+      },
+      {
+        id: staffRole.id,
+        allow: [
+          PermissionsBitField.Flags.ViewChannel,
+          PermissionsBitField.Flags.SendMessages
+        ]
+      }
+    ]
+  });
+
+  console.log("✔ Canal logs criado");
+}
+
+// ================= CATEGORIA TICKETS =================
+let ticketCategory = guild.channels.cache.find(
+  c => c.name === "🎫 TICKETS" && c.type === ChannelType.GuildCategory
+);
+
+if (!ticketCategory) {
+
+  ticketCategory = await guild.channels.create({
+    name: "🎫 TICKETS",
+    type: ChannelType.GuildCategory
+  });
+
+  console.log("✔ Categoria de tickets criada");
+        }
+      
       console.log("✔ Canal logs criado");
     }
 
@@ -105,8 +144,8 @@ Propostas de parceria, divulgação ou colaboração entre servidores.
 📌 Importante:  
 Explique sua situação com o máximo de detalhes possível para agilizar o atendimento.
 `)
-        .setColor("#2b2d31");
-
+        .setColor("#2b2d31")
+      
       const row = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
           .setCustomId("ticket_suporte")
@@ -155,9 +194,14 @@ client.on("interactionCreate", async (interaction) => {
   async function createTicket(type) {
 
     const channel = await guild.channels.create({
-      name: `🎫-${type}-${user.username.toLowerCase().replace(/[^a-z0-9]/g, "")}`,
-      type: ChannelType.GuildText,
-      permissionOverwrites: [
+  name: `🎫-${type}-${user.username.toLowerCase().replace(/[^a-z0-9]/g, "")}`,
+  type: ChannelType.GuildText,
+
+  parent: guild.channels.cache.find(
+    c => c.name === "🎫 TICKETS" && c.type === ChannelType.GuildCategory
+  )?.id,
+
+  permissionOverwrites: [
         {
           id: guild.id,
           deny: [PermissionsBitField.Flags.ViewChannel]
