@@ -43,7 +43,7 @@ async function setupServer(guild) {
     let staffRoleId = await db.get(`staffRole_${guild.id}`);
 let staffRole = staffRoleId ? guild.roles.cache.get(staffRoleId) : null;
 
-if (!staffRole) {
+    if (!staffRole) {
   staffRole = await guild.roles.create({
     name: "STAFF",
     color: "Red"
