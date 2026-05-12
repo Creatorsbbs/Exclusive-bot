@@ -40,13 +40,20 @@ async function setupServer(guild) {
   try {
 
     // ================= CARGO STAFF =================
-    let staffRole = guild.roles.cache.find(r => r.name === "STAFF");
+    const staffRoleId = await db.get(`staffRole_${guild.id}`);
+const staffRole = guild.roles.cache.get(staffRoleId);
+
+    if (staffRole) {
+  await db.set(`staffRole_${guild.id}`, staffRole.id);
+    }
 
     if (!staffRole) {
       staffRole = await guild.roles.create({
-        name: "STAFF",
-        color: "Red"
-      });
+  name: "STAFF",
+  color: "Red"
+});
+
+await db.set(`staffRole_${guild.id}`, staffRole.id);
 
       console.log("✔ Cargo STAFF criado");
     }
