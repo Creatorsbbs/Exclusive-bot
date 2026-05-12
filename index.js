@@ -215,16 +215,21 @@ Equipe de Suporte`)
       .setColor("Green");
 
     const row = new ActionRowBuilder().addComponents(
-      new ButtonBuilder()
-        .setCustomId("call_staff")
-        .setLabel("🔔 Chamar Staff")
-        .setStyle(ButtonStyle.Primary),
+  new ButtonBuilder()
+    .setCustomId("call_staff")
+    .setLabel("🔔 Chamar Staff")
+    .setStyle(ButtonStyle.Primary),
 
-      new ButtonBuilder()
-        .setCustomId("close_ticket")
-        .setLabel("🔒 Fechar")
-        .setStyle(ButtonStyle.Danger)
-    );
+  new ButtonBuilder()
+    .setCustomId("notify_client")
+    .setLabel("📨 Notificar Cliente")
+    .setStyle(ButtonStyle.Success),
+
+  new ButtonBuilder()
+    .setCustomId("close_ticket")
+    .setLabel("🔒 Fechar")
+    .setStyle(ButtonStyle.Danger)
+);
 
     await channel.send({ content: `${user}`, embeds: [embed], components: [row] });
 
@@ -246,6 +251,50 @@ Equipe de Suporte`)
     interaction.channel.send(`🔔 ${user} chamou a staff!`);
     return interaction.reply({ content: "Staff notificada!", ephemeral: true });
   }
+
+  // ================= NOTIFICAR CLIENTE =================
+if (interaction.customId === "notify_client") {
+
+  const ownerId = ticketOwners.get(interaction.channel.id);
+
+  if (!ownerId) {
+    return interaction.reply({
+      content: "❌ Dono do ticket não encontrado.",
+      ephemeral: true
+    });
+  }
+
+  try {
+
+    const ticketUser = await client.users.fetch(ownerId);
+
+    const embed = new EmbedBuilder()
+      .setTitle("📨 Atualização no Atendimento")
+      .setDescription(`
+Olá ${ticketUser},
+
+Sua ticket recebeu uma nova resposta da equipe.
+
+Volte ao servidor para continuar o atendimento.
+`)
+      .setColor("Blue")
+      .setTimestamp();
+
+    await ticketUser.send({ embeds: [embed] });
+
+    return interaction.reply({
+      content: "✅ Cliente notificado no privado.",
+      ephemeral: true
+    });
+
+  } catch (err) {
+
+    return interaction.reply({
+      content: "❌ Não consegui enviar mensagem no privado do cliente.",
+      ephemeral: true
+    });
+  }
+}
 
   if (interaction.customId === "close_ticket") {
     await interaction.deferUpdate();
