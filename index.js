@@ -263,7 +263,7 @@ new ButtonBuilder()
 
 await channel.send({
 
-content: 🔔 <@&${staffRole.id}> <@${guild.ownerId}> ${user},
+content: `🔔 <@&${staffRole?.id}> <@${guild.ownerId}> ${user}`,
 embeds: [embed],
 components: [row]
 });
@@ -279,7 +279,7 @@ const embedLog = new EmbedBuilder()
 { name: "🎫 Ticket", value: channel.name },
 { name: "👤 Aberto por", value: user.tag },
 { name: "📂 Tipo", value: type },
-{ name: "📅 Criado em", value: <t:${Math.floor(Date.now() / 1000)}:F> },
+{ name: "📅 Criado em", value: `<t:${Math.floor(Date.now() / 1000)}:F>` },
 { name: "💬 Mensagens", value: "0" },
 { name: "👥 Participantes", value: "1" }
 )
@@ -301,7 +301,7 @@ if (interaction.customId === "ticket_denuncia") return createTicket("denuncia");
 if (interaction.customId === "ticket_parceria") return createTicket("parceria");
 
 if (interaction.customId === "call_staff") {
-interaction.channel.send(🔔 <@&${staffRole.id}> ${user} chamou a staff!);
+interaction.channel.send(`🔔 <@&${staffRole?.id}> ${user} chamou a staff!`);
 return interaction.reply({ content: "Staff notificada!", ephemeral: true });
 }
 
