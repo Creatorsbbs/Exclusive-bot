@@ -61,11 +61,12 @@ if (!openLogs) {
     deny: [PermissionsBitField.Flags.ViewChannel]
   },
   {
-    id: guild.ownerId,
-    allow: [
-      PermissionsBitField.Flags.ViewChannel,
-      PermissionsBitField.Flags.SendMessages
-    ]
+  id: guild.members.me.id,
+  allow: [
+    PermissionsBitField.Flags.ViewChannel,
+    PermissionsBitField.Flags.SendMessages,
+    PermissionsBitField.Flags.ManageChannels
+  ]
   },
   ...(staffRole ? [{
     id: staffRole.id,
@@ -97,11 +98,13 @@ if (!closeLogs) {
         deny: [PermissionsBitField.Flags.ViewChannel]
       },
       {
-        id: guild.ownerId,
-        allow: [
-          PermissionsBitField.Flags.ViewChannel,
-          PermissionsBitField.Flags.SendMessages
-        ]
+        {
+  id: guild.members.me.id,
+  allow: [
+    PermissionsBitField.Flags.ViewChannel,
+    PermissionsBitField.Flags.SendMessages,
+    PermissionsBitField.Flags.ManageChannels
+  ]
       },
 
       ...(staffRole ? [{
