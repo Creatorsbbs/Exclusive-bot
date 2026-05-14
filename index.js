@@ -56,25 +56,28 @@ let openLogs = guild.channels.cache.find(
     type: ChannelType.GuildText,
 
     permissionOverwrites: [
-      {
-        id: guild.id,
-        deny: [PermissionsBitField.Flags.ViewChannel]
-      },
-      {
-        id: guild.ownerId,
-        allow: [
-          PermissionsBitField.Flags.ViewChannel,
-          PermissionsBitField.Flags.SendMessages
-        ]
-      },
-      ...(staffRole ? [{
-        id: staffRole.id,
-        allow: [
-          PermissionsBitField.Flags.ViewChannel,
-          PermissionsBitField.Flags.SendMessages
-        ]
-      }] : [])
+  {
+    id: guild.id,
+    deny: [PermissionsBitField.Flags.ViewChannel]
+  },
+
+  {
+    id: guild.members.me.id,
+    allow: [
+      PermissionsBitField.Flags.ViewChannel,
+      PermissionsBitField.Flags.SendMessages,
+      PermissionsBitField.Flags.ManageChannels
     ]
+  },
+
+  ...(staffRole ? [{
+    id: staffRole.id,
+    allow: [
+      PermissionsBitField.Flags.ViewChannel,
+      PermissionsBitField.Flags.SendMessages
+    ]
+  }] : [])
+]
   });
 
   console.log("✔ Canal tickets-abertos criado");
