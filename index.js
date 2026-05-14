@@ -231,8 +231,9 @@ name: `🎫-${type}-${user.username.toLowerCase().replace(/[^a-z0-9]/g, "")}-${D
 type: ChannelType.GuildText,
 
 const category = guild.channels.cache.find(
-  c => c.name === "🎫 TICKETS" &&
-  c.type === ChannelType.GuildCategory
+  c =>
+    c.name === "🎫 TICKETS" &&
+    c.type === ChannelType.GuildCategory
 );
 
 if (!category) {
@@ -241,28 +242,33 @@ if (!category) {
     ephemeral: true
   });
 }
-  
-permissionOverwrites: [
-{
-id: guild.id,
-deny: [PermissionsBitField.Flags.ViewChannel]
-},
-{
-id: user.id,
-allow: [
-PermissionsBitField.Flags.ViewChannel,
-PermissionsBitField.Flags.SendMessages,
-PermissionsBitField.Flags.ReadMessageHistory
-]
-},
-{
-id: staffRole?.id,
-allow: [
-PermissionsBitField.Flags.ViewChannel,
-PermissionsBitField.Flags.SendMessages
-]
-}
-]
+
+const channel = await guild.channels.create({
+  name: `🎫-${type}-${user.username.toLowerCase().replace(/[^a-z0-9]/g, "")}-${Date.now().toString().slice(-4)}`,
+  type: ChannelType.GuildText,
+  parent: category.id,
+
+  permissionOverwrites: [
+    {
+      id: guild.id,
+      deny: [PermissionsBitField.Flags.ViewChannel]
+    },
+    {
+      id: user.id,
+      allow: [
+        PermissionsBitField.Flags.ViewChannel,
+        PermissionsBitField.Flags.SendMessages,
+        PermissionsBitField.Flags.ReadMessageHistory
+      ]
+    },
+    {
+      id: staffRole?.id,
+      allow: [
+        PermissionsBitField.Flags.ViewChannel,
+        PermissionsBitField.Flags.SendMessages
+      ]
+    }
+  ]
 });
 
 ticketOwners.set(channel.id, user.id);  
