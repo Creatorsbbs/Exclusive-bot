@@ -44,32 +44,79 @@ let staffRoleId = await db.get(`staffRole_${guild.id}`);
 
 let staffRole = staffRoleId ? guild.roles.cache.get(staffRoleId) : null;
 
-// ================= CANAL LOGS =================  
-let logChannel = guild.channels.cache.find(c => c.name === "logs");  
+// ================= CANAL TICKETS ABERTOS =================
+let openLogs = guild.channels.cache.find(
+  c => c.name === "📂・tickets-abertos"
+);
 
-if (!logChannel) {  
+if (!openLogs) {
 
-  logChannel = await guild.channels.create({  
-    name: "logs",  
-    type: ChannelType.GuildText,  
+  openLogs = await guild.channels.create({
+    name: "📂・ticket-abertos",
+    type: ChannelType.GuildText,
 
-    permissionOverwrites: [  
-      {  
-        id: guild.id,  
-        deny: [PermissionsBitField.Flags.ViewChannel]  
-      },  
-      {  
-        id: staffRole.id,  
-        allow: [  
-          PermissionsBitField.Flags.ViewChannel,  
-          PermissionsBitField.Flags.SendMessages  
-        ]  
-      }  
-    ]  
-  });  
+    permissionOverwrites: [
+      {
+        id: guild.id,
+        deny: [PermissionsBitField.Flags.ViewChannel]
+      },
+      {
+        id: guild.ownerId,
+        allow: [
+          PermissionsBitField.Flags.ViewChannel,
+          PermissionsBitField.Flags.SendMessages
+        ]
+      },
 
-  console.log("✔ Canal logs criado");  
-}  
+      ...(staffRole ? [{
+        id: staffRole.id,
+        allow: [
+          PermissionsBitField.Flags.ViewChannel,
+          PermissionsBitField.Flags.SendMessages
+        ]
+      }] : [])
+    ]
+  });
+
+  console.log("✔ Canal tickets-abertos criado");
+}
+
+// ================= CANAL TICKETS FECHADOS =================
+let closeLogs = guild.channels.cache.find(
+  c => c.name === "🔒・tickets-fechados"
+);
+
+if (!closeLogs) {
+
+  closeLogs = await guild.channels.create({
+    name: "🔒・tickets-fechados",
+    type: ChannelType.GuildText,
+
+    permissionOverwrites: [
+      {
+        id: guild.id,
+        deny: [PermissionsBitField.Flags.ViewChannel]
+      },
+      {
+        id: guild.ownerId,
+        allow: [
+          PermissionsBitField.Flags.ViewChannel,
+          PermissionsBitField.Flags.SendMessages
+        ]
+      },
+
+      ...(staffRole ? [{
+        id: staffRole.id,
+        allow: [
+          PermissionsBitField.Flags.ViewChannel,
+          PermissionsBitField.Flags.SendMessages
+        ]
+      }] : [])
+    ]
+  });
+
+  console.log("✔ Canal tickets-fechados criado");
+}
 
 // ================= CATEGORIA TICKETS =================  
 let ticketCategory = guild.channels.cache.find(  
