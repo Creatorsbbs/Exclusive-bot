@@ -75,7 +75,8 @@ if (!openLogs) {
     ]
   }] : [])
 ]
-
+});
+  
   console.log("✔ Canal tickets-abertos criado");
 }
 
