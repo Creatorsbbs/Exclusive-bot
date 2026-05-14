@@ -69,12 +69,13 @@ if (!openLogs) {
       },
 
       ...(staffRole ? [{
-        id: staffRole.id,
-        allow: [
-          PermissionsBitField.Flags.ViewChannel,
-          PermissionsBitField.Flags.SendMessages
-        ]
-      }] : [])
+        ...(staffRole ? [{
+  id: staffRole.id,
+  allow: [
+    PermissionsBitField.Flags.ViewChannel,
+    PermissionsBitField.Flags.SendMessages
+  ]
+}] : [])
     ]
   });
 
@@ -315,7 +316,9 @@ embeds: [embed],
 components: [row]
 });
 
-const log = guild.channels.cache.find(c => c.name === "logs");
+const log = guild.channels.cache.find(
+  c => c.name === "📂・tickets-abertos"
+);
 
 if (log) {
 const embedLog = new EmbedBuilder()
@@ -422,7 +425,10 @@ const embed = new EmbedBuilder()
     { name: "📅 Aberto em", value: data ? `<t:${Math.floor(data.createdAt / 1000)}:F>` : "Desconhecido" }  
   );  
 
-const log = guild.channels.cache.find(c => c.name === "logs");  
+const log = guild.channels.cache.find(
+  c => c.name === "🔒・tickets-fechados"
+);
+  
 if (log) log.send({ embeds: [embed] });  
 
 if (owner) owner.send({ embeds: [embed] }).catch(() => {});  
