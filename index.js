@@ -49,37 +49,36 @@ let openLogs = guild.channels.cache.find(
   c => c.name === "📂・tickets-abertos"
 );
 
-if (!openLogs) {
+  if (!openLogs) {
 
   openLogs = await guild.channels.create({
     name: "📂・tickets-abertos",
     type: ChannelType.GuildText,
 
     permissionOverwrites: [
-  {
-    id: guild.id,
-    deny: [PermissionsBitField.Flags.ViewChannel]
-  },
-  {
-  id: guild.members.me.id,
-  allow: [
-    PermissionsBitField.Flags.ViewChannel,
-    PermissionsBitField.Flags.SendMessages,
-    PermissionsBitField.Flags.ManageChannels
-  ]
-  },
-  ...(staffRole ? [{
-    id: staffRole.id,
-    allow: [
-      PermissionsBitField.Flags.ViewChannel,
-      PermissionsBitField.Flags.SendMessages
+      {
+        id: guild.id,
+        deny: [PermissionsBitField.Flags.ViewChannel]
+      },
+      {
+        id: guild.ownerId,
+        allow: [
+          PermissionsBitField.Flags.ViewChannel,
+          PermissionsBitField.Flags.SendMessages
+        ]
+      },
+      ...(staffRole ? [{
+        id: staffRole.id,
+        allow: [
+          PermissionsBitField.Flags.ViewChannel,
+          PermissionsBitField.Flags.SendMessages
+        ]
+      }] : [])
     ]
-  }] : [])
-]
-});
-  
+  });
+
   console.log("✔ Canal tickets-abertos criado");
-}
+  }
 
 // ================= CANAL TICKETS FECHADOS =================
 let closeLogs = guild.channels.cache.find(
@@ -338,7 +337,12 @@ const embedLog = new EmbedBuilder()
 { name: "🎫 Ticket", value: channel.name },
 { name: "👤 Aberto por", value: user.tag },
 { name: "📂 Tipo", value: type },
-{ name: "📅 Criado em", value: `<t:${Math.floor(Date.now() / 1000)}:F>` },
+{ 
+  name: "📅 Aberto em",
+  value: data
+    ? `<t:${Math.floor(data.createdAt.getTime() / 1000)}:F>`
+    : "Desconhecido"
+}
 { name: "💬 Mensagens", value: "0" },
 { name: "👥 Participantes", value: "1" }
 )
