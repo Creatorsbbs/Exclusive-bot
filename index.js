@@ -234,6 +234,8 @@ client.on("interactionCreate", async (interaction) => {
 
   async function createTicket(type) {
 
+  try {
+
     await interaction.deferReply({ ephemeral: true });
 
     const category = guild.channels.cache.find(
@@ -335,10 +337,10 @@ Equipe de Suporte
     );
 
     await channel.send({
-      content: `${staffRole ? `<@&${staffRole.id}>` : ""} <@${guild.ownerId}> ${user}`,
-      embeds: [embed],
-      components: [row]
-    });
+  content: `${staffRole ? `<@&${staffRole.id}>` : ""} <@${guild.ownerId}> <@${user.id}>`,
+  embeds: [embed],
+  components: [row]
+});
 
     const log = guild.channels.cache.find(
       c => c.name === "📂・tickets-abertos"
@@ -374,6 +376,14 @@ Equipe de Suporte
       content: `🎫 Ticket criado: ${channel}`,
       ephemeral: true
     });
+
+    } catch (err) {
+    console.log("Erro ao criar ticket:", err);
+
+    return interaction.editReply({
+      content: "❌ Erro ao criar ticket."
+    });
+  }
   }
 
   if (interaction.customId === "ticket_suporte") {
