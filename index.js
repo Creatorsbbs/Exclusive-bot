@@ -66,9 +66,7 @@ if (!openLogs) {
           PermissionsBitField.Flags.ViewChannel,
           PermissionsBitField.Flags.SendMessages
         ]
-      },
-
-      ...(staffRole ? [{
+      
         ...(staffRole ? [{
   id: staffRole.id,
   allow: [
