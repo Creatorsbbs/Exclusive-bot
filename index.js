@@ -99,7 +99,7 @@ if (!closeLogs) {
         id: guild.id,
         deny: [PermissionsBitField.Flags.ViewChannel]
       },
-      {
+      
         {
   id: guild.members.me.id,
   allow: [
@@ -227,7 +227,7 @@ async function createTicket(type) {
 
 const channel = await guild.channels.create({
 
-name: `🎫-${type}-${user.username.toLowerCase().replace(/[^a-z0-9]/g, "")}-${Date.now().toString().slice(-4)}`
+name: `🎫-${type}-${user.username.toLowerCase().replace(/[^a-z0-9]/g, "")}-${Date.now().toString().slice(-4)}`,
 type: ChannelType.GuildText,
 
 const category = guild.channels.cache.find(
@@ -322,7 +322,7 @@ new ButtonBuilder()
 
 await channel.send({
 
-content: `${staffRole ? `<@&${staffRole.id}>` : ""} <@${guild.ownerId}> ${user}`
+content: `${staffRole ? `<@&${staffRole.id}>` : ""} <@${guild.ownerId}> ${user}`,
 embeds: [embed],
 components: [row]
 });
