@@ -52,7 +52,7 @@ let openLogs = guild.channels.cache.find(
 if (!openLogs) {
 
   openLogs = await guild.channels.create({
-    name: "📂・ticket-abertos",
+    name: "📂・tickets-abertos",
     type: ChannelType.GuildText,
 
     permissionOverwrites: [
@@ -108,12 +108,12 @@ if (!closeLogs) {
       },
 
       ...(staffRole ? [{
-        id: staffRole.id,
-        allow: [
-          PermissionsBitField.Flags.ViewChannel,
-          PermissionsBitField.Flags.SendMessages
-        ]
-      }] : [])
+  id: staffRole.id,
+  allow: [
+    PermissionsBitField.Flags.ViewChannel,
+    PermissionsBitField.Flags.SendMessages
+  ]
+}] : [])
     ]
   });
 
@@ -225,13 +225,21 @@ async function createTicket(type) {
 
 const channel = await guild.channels.create({
 
-name: `🎫-${type}-${user.username.toLowerCase().replace(/[^a-z0-9]/g, "")}`,
+name: `🎫-${type}-${user.username.toLowerCase().replace(/[^a-z0-9]/g, "")}-${Date.now().toString().slice(-4)}`
 type: ChannelType.GuildText,
 
-parent: guild.channels.cache.find(
-c => c.name === "🎫 TICKETS" && c.type === ChannelType.GuildCategory
-)?.id,
+const category = guild.channels.cache.find(
+  c => c.name === "🎫 TICKETS" &&
+  c.type === ChannelType.GuildCategory
+);
 
+if (!category) {
+  return interaction.reply({
+    content: "❌ Categoria de tickets não encontrada.",
+    ephemeral: true
+  });
+}
+  
 permissionOverwrites: [
 {
 id: guild.id,
@@ -312,7 +320,7 @@ new ButtonBuilder()
 
 await channel.send({
 
-content: `🔔 <@&${staffRole?.id}> <@${guild.ownerId}> ${user}`,
+content: `${staffRole ? `<@&${staffRole.id}>` : ""} <@${guild.ownerId}> ${user}`
 embeds: [embed],
 components: [row]
 });
@@ -457,6 +465,14 @@ data.messages++;
 if (!data.users.has(message.author.id)) {
 data.users.add(message.author.id);
 }
+});
+
+process.on("unhandledRejection", err => {
+  console.error("Unhandled Rejection:", err);
+});
+
+process.on("uncaughtException", err => {
+  console.error("Uncaught Exception:", err);
 });
 
 client.login(process.env.TOKEN);
