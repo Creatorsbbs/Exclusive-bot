@@ -234,6 +234,8 @@ client.on("interactionCreate", async (interaction) => {
 
   async function createTicket(type) {
 
+    await interaction.deferReply({ ephemeral: true });
+
     const category = guild.channels.cache.find(
       c =>
         c.name === "🎫 TICKETS" &&
@@ -368,7 +370,7 @@ Equipe de Suporte
       log.send({ embeds: [embedLog] });
     }
 
-    return interaction.reply({
+    return interaction.editReply({
       content: `🎫 Ticket criado: ${channel}`,
       ephemeral: true
     });
