@@ -172,6 +172,7 @@ client.on("interactionCreate", async (interaction) => {
 
       const embed = new EmbedBuilder()
         .setTitle("🎫 CENTRAL DE ATENDIMENTO")
+        .setThumbnail("https://cdn.discordapp.com/attachments/1264564541979627604/1504187640524701726/file_000000005270720e895d4916721bd3ce.png?ex=6a08b667&is=6a0764e7&hm=9ffdfd4d3da6d142e8cfaacb51b9088c34025d4947ccadb67a3df9c7b49f7240&")
         .setDescription(`
 Aqui você pode abrir um atendimento de forma rápida e organizada. Escolha a opção que melhor se encaixa na sua necessidade e nossa equipe irá te atender o mais rápido possível.
 
