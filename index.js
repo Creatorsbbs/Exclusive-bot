@@ -193,6 +193,7 @@ Propostas de parceria, divulgação ou colaboração entre servidores.
 📌 Importante:
 Explique sua situação com o máximo de detalhes possível para agilizar o atendimento.
 `)
+        .setImage("https://cdn.discordapp.com/attachments/1264564541979627604/1504187640524701726/file_000000005270720e895d4916721bd3ce.png?ex=6a08b667&is=6a0764e7&hm=9ffdfd4d3da6d142e8cfaacb51b9088c34025d4947ccadb67a3df9c7b49f7240&")
         .setColor("#2b2d31");
 
       const row = new ActionRowBuilder().addComponents(
