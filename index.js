@@ -42,6 +42,10 @@ async function setupServer(guild) {
     // ================= CARGO STAFF =================
     let staffRoleId = await db.get(`staffRole_${guild.id}`);
 
+    if (!staffRoleId) {
+      staffRoleId = "1491095314550100100";
+    }
+
     let staffRole = staffRoleId
       ? guild.roles.cache.get(staffRoleId)
       : null;
@@ -344,10 +348,10 @@ Seu ticket foi criado com sucesso e nossa equipe já foi notificada.
       );
 
       await channel.send({
-        content: `${staffRole ? `<@&${staffRole.id}>` : ""} <@${guild.ownerId}> <@${user.id}>`,
-        embeds: [embed],
-        components: [row]
-      });
+  content: `<@&1491095314550100100> <@${user.id}>`,
+  embeds: [embed],
+  components: [row]
+});
 
       // ================= LOG ABERTO =================
       const log = guild.channels.cache.find(
