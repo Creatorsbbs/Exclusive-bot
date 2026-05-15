@@ -111,6 +111,15 @@ async function setupServer(guild) {
             ]
           },
 
+          {
+  id: "1491095314550100100",
+  allow: [
+    PermissionsBitField.Flags.ViewChannel,
+    PermissionsBitField.Flags.SendMessages,
+    PermissionsBitField.Flags.ReadMessageHistory
+  ]
+},
+
           ...(staffRole ? [{
             id: staffRole.id,
             allow: [
