@@ -159,21 +159,19 @@ async function setupServer(guild) {
   }
 }
 
-// ================= PAINEL =================
-client.on("interactionCreate", async (interaction) => {
-
+// ================= PAINEL (AGORA EM MENSAGEM) =================
+client.on("messageCreate", async (message) => {
   try {
+    if (!message.guild) return;
+    if (message.author.bot) return;
 
-    if (!interaction.isChatInputCommand()) return;
+    // gatilho do comando
+    if (message.content.toLowerCase() !== "painel") return;
 
-    if (interaction.commandName === "painel") {
-
-      await interaction.deferReply();
-
-      const embed = new EmbedBuilder()
-        .setTitle("🎫 CENTRAL DE ATENDIMENTO")
-        .setThumbnail("https://cdn.discordapp.com/attachments/1264564541979627604/1504187640524701726/file_000000005270720e895d4916721bd3ce.png?ex=6a08b667&is=6a0764e7&hm=9ffdfd4d3da6d142e8cfaacb51b9088c34025d4947ccadb67a3df9c7b49f7240&")
-        .setDescription(`
+    const embed = new EmbedBuilder()
+      .setTitle("🎫 CENTRAL DE ATENDIMENTO")
+      .setThumbnail("https://cdn.discordapp.com/attachments/1264564541979627604/1504187640524701726/file_000000005270720e895d4916721bd3ce.png?ex=6a08b667&is=6a0764e7&hm=9ffdfd4d3da6d142e8cfaacb51b9088c34025d4947ccadb67a3df9c7b49f7240&")
+      .setDescription(`
 Aqui você pode abrir um atendimento de forma rápida e organizada. Escolha a opção que melhor se encaixa na sua necessidade e nossa equipe irá te atender o mais rápido possível.
 
 💬 Suporte
@@ -193,47 +191,38 @@ Propostas de parceria, divulgação ou colaboração entre servidores.
 📌 Importante:
 Explique sua situação com o máximo de detalhes possível para agilizar o atendimento.
 `)
-        .setImage("https://cdn.discordapp.com/attachments/1264564541979627604/1504187640524701726/file_000000005270720e895d4916721bd3ce.png?ex=6a08b667&is=6a0764e7&hm=9ffdfd4d3da6d142e8cfaacb51b9088c34025d4947ccadb67a3df9c7b49f7240&")
-        .setColor("#00b0f4");
+      .setImage("https://cdn.discordapp.com/attachments/1264564541979627604/1504187640524701726/file_000000005270720e895d4916721bd3ce.png?ex=6a08b667&is=6a0764e7&hm=9ffdfd4d3da6d142e8cfaacb51b9088c34025d4947ccadb67a3df9c7b49f7240&")
+      .setColor("#00b0f4");
 
-      const row = new ActionRowBuilder().addComponents(
+    const row = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+        .setCustomId("ticket_suporte")
+        .setLabel("💬 Suporte")
+        .setStyle(ButtonStyle.Success),
 
-        new ButtonBuilder()
-          .setCustomId("ticket_suporte")
-          .setLabel("💬 Suporte")
-          .setStyle(ButtonStyle.Success),
+      new ButtonBuilder()
+        .setCustomId("ticket_vendas")
+        .setLabel("💰 Vendas")
+        .setStyle(ButtonStyle.Primary),
 
-        new ButtonBuilder()
-          .setCustomId("ticket_vendas")
-          .setLabel("💰 Vendas")
-          .setStyle(ButtonStyle.Primary),
+      new ButtonBuilder()
+        .setCustomId("ticket_denuncia")
+        .setLabel("🚨 Denúncia")
+        .setStyle(ButtonStyle.Danger),
 
-        new ButtonBuilder()
-          .setCustomId("ticket_denuncia")
-          .setLabel("🚨 Denúncia")
-          .setStyle(ButtonStyle.Danger),
+      new ButtonBuilder()
+        .setCustomId("ticket_parceria")
+        .setLabel("🤝 Parceria")
+        .setStyle(ButtonStyle.Secondary)
+    );
 
-        new ButtonBuilder()
-          .setCustomId("ticket_parceria")
-          .setLabel("🤝 Parceria")
-          .setStyle(ButtonStyle.Secondary)
-      );
-
-      return interaction.editReply({
-        embeds: [embed],
-        components: [row]
-      });
-    }
+    return message.channel.send({
+      embeds: [embed],
+      components: [row]
+    });
 
   } catch (err) {
-
     console.log("Erro painel:", err);
-
-    if (interaction.deferred) {
-      interaction.editReply({
-        content: "❌ Erro ao abrir painel."
-      });
-    }
   }
 });
 
